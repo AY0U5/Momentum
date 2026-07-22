@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB:momentum}
+    username: ${POSTGRES_USER:momentum}
+    password: ${POSTGRES_PASSWORD:momentum}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: update                            # 'update' en dev, 'validate' ou 'none' en prod
+    show-sql: true                                # Affiche les requêtes SQL dans la console
+    properties:
+      hibernate:
+        format_sql: true                          # Formate les requêtes SQL rendues
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: localhost
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: VOTRE_CLIENT_ID_GOOGLE.apps.googleusercontent.com
+
+# Propriétés personnalisées de l'application
+application:
+  mail:
+    from: noreply@momentum.com                   # Déplacé ici pour plus de clarté
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000                        # 24 heures en ms
+      refresh-token:
+        expiration: 604800000                     # 7 jours en ms
