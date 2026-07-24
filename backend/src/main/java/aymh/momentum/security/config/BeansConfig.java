@@ -1,7 +1,9 @@
 package aymh.momentum.security.config;
 
 import aymh.momentum.security.dao.UserDao;
+import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BeansConfig {
 
     private final UserDao userDao;
+
+    @Value("${application.minio.url}")
+    private String url;
+    @Value("${application.minio.access-key}")
+    private String accessKey;
+    @Value("${application.minio.secret-key}")
+    private String secretKey;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -42,5 +51,13 @@ public class BeansConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(url)
+                .credentials(accessKey, secretKey)
+                .build();
     }
 }

@@ -4,6 +4,7 @@ import aymh.momentum.security.bean.Role;
 import aymh.momentum.security.bean.User;
 import aymh.momentum.security.common.enums.EmailTemplateName;
 import aymh.momentum.security.common.service.MailService;
+import aymh.momentum.security.common.service.MinioService;
 import aymh.momentum.security.dao.RoleDao;
 import aymh.momentum.security.dao.UserDao;
 import aymh.momentum.security.exceptions.UserAlreadyExistException;
@@ -24,6 +25,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -31,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -43,6 +46,12 @@ public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final MailService mailService;
+    private final MinioService minioService;
+
+    @Value("${application.minio.buckets.user-avatars}")
+    private String avatarBucket;
+    @Value("${application.minio.url}")
+    private String minioBaseUrl;
 
     @Value("${spring.security.oauth2.client.registration.google.client-id:YOUR_GOOGLE_CLIENT_ID}")
     private String googleClientId;
@@ -164,5 +173,27 @@ public class UserServiceImpl implements UserService {
         } catch (GeneralSecurityException | IOException e) {
             throw new BadCredentialsException("Failed to authenticate with Google: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String uploadProfilePicture(Long userId, MultipartFile file) {
+        User user = dao.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Upload sur MinIO
+        String fileName = minioService.uploadFile(file, avatarBucket);
+
+        // Définir l'URL du profil
+        String pictureUrl = minioBaseUrl + "/" + avatarBucket + "/" + fileName;
+        user.setPicture(pictureUrl);
+        user.setUpdatedAt(LocalDateTime.now());
+
+        dao.save(user);
+        return pictureUrl;
+    }
+
+    @Override
+    public Optional<User> findById(Long userId) {
+        return dao.findById(userId);
     }
 }
