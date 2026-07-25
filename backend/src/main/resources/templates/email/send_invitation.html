@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Invitation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4F46E5; /* Momentum Indigo */
+            padding: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .project-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #4F46E5;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 6px 0;
+        }
+        .project-desc {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>Momentum</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <p>Hello <strong th:text="${receiverName}">User</strong>,</p>
+
+        <p>
+            <strong th:text="${senderName}">A team member</strong> has invited you to join the team on the following project:
+        </p>
+
+        <!-- Project Card -->
+        <div class="project-card">
+            <p class="project-title" th:text="${projectName}">Project Name</p>
+            <p class="project-desc" th:text="${projectDescription}">Project description...</p>
+        </div>
+
+        <p>
+            Log in to your <strong>Momentum</strong> workspace to respond to this invitation in your notifications.
+        </p>
+
+        <p style="font-size: 13px; color: #64748b; margin-top: 25px;">
+            ⏱️ <em>Note: This invitation will automatically expire in <span th:text="${expirationDays}">7</span> days.</em>
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>This is an automated email sent by Momentum. Please do not reply directly to this message.</p>
+    </div>
+</div>
+
+</body>
+</html>

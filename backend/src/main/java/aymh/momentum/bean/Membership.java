@@ -3,10 +3,7 @@ package aymh.momentum.bean;
 import aymh.momentum.security.bean.User;
 import aymh.momentum.security.common.enums.ProjectRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Membership {
     @Id
     @SequenceGenerator(name = "membership_sequence", sequenceName = "membership_sequence", allocationSize = 1)

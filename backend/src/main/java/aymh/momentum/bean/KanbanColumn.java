@@ -2,10 +2,7 @@ package aymh.momentum.bean;
 
 import aymh.momentum.security.common.enums.ColumnNames;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -14,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class KanbanColumn {
     @Id
     @SequenceGenerator(name = "kanban_sequence", sequenceName = "kanban_sequence", allocationSize = 1)
@@ -21,7 +19,7 @@ public class KanbanColumn {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ColumnNames label;
-    private BigDecimal position;
+    private Long position;
     private String color;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")

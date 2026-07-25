@@ -2,10 +2,7 @@ package aymh.momentum.bean;
 
 import aymh.momentum.security.common.enums.ProjectState;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,11 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Project {
     @Id
     @SequenceGenerator(name = "project_sequence", sequenceName = "project_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "project_sequence")
     private Long id;
+    @Column(nullable = false)
     private String title;
     @Column(columnDefinition = "TEXT")
     private String description;

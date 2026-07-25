@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskUserDao extends JpaRepository<TaskUser,Long> {
 
+    boolean existsByTaskIdAndAssigneeId(Long taskId, Long assigneeId);
+
+    // Optionnel (pour plus tard) : supprimer une assignation
+    void deleteByTaskIdAndAssigneeId(Long taskId, Long assigneeId);
 }

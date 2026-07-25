@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum EmailTemplateName {
 
     ACCOUNT_CREATED("account_created", "Welcome at Momentum !"),
-    RESET_PASSWORD("reset_password", "Reset your password");
+    RESET_PASSWORD("reset_password", "Reset your password"),
+    SEND_INVITATION("send_invitation", "Request to join a project");
 
     private final String name;
     private final String defaultSubject;

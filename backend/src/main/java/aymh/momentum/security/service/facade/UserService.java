@@ -18,4 +18,6 @@ public interface UserService {
     String uploadProfilePicture(Long userId, MultipartFile file);
 
     Optional<User> findById(Long userId);
+
+    Optional<User> findByUsername(String user);
 }

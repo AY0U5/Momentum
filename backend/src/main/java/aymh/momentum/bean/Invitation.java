@@ -1,11 +1,9 @@
 package aymh.momentum.bean;
 
 import aymh.momentum.security.bean.User;
+import aymh.momentum.security.common.enums.InvitationState;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +12,15 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Invitation {
     @Id
     @SequenceGenerator(name = "invitation_sequence", sequenceName = "invitation_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "invitation_sequence")
     private Long id;
     private LocalDateTime createdAt;
+    private LocalDateTime expiredAt;
+    private InvitationState state;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private User sender;
