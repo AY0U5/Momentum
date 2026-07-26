@@ -141,4 +141,9 @@ public class MembershipServiceImpl implements MembershipService {
     public Optional<Membership> findByUserAndProjectIdAndActiveTrue(User currentUser, Long id) {
         return membershipDao.findByUserAndProjectIdAndActiveTrue(currentUser,id);
     }
+
+    @Override
+    public Optional<Membership> findByUserIdAndProjectIdAndActiveTrue(Long id, Long projectId) {
+        return membershipDao.findByUserIdAndProjectIdAndActiveTrue(id,projectId);
+    }
 }

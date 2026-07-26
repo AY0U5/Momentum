@@ -94,13 +94,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     @Override
-    public TaskUser assignTask(Long taskId, User user) {
+    public void assignTask(Long taskId, User user) {
         User currentUser = util.getCurrentUser();
         Task task = taskDao.findById(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task Not Found"));
 
         Long projectId = task.getColumn().getProject().getId();
-        membershipService.findByUserAndProjectIdAndActiveTrue(currentUser, projectId)
+        membershipService.findByUserIdAndProjectIdAndActiveTrue(currentUser.getId(), projectId)
                 .orElseThrow(() -> new IllegalStateException("Your aren't member in this project"));
 
         Membership targetMembership = membershipService.findByUserAndProjectIdAndActiveTrue(user, projectId)
@@ -115,7 +115,7 @@ public class TaskServiceImpl implements TaskService {
                 .assignee(targetMembership.getUser())
                 .build();
 
-        return taskUserService.save(taskUser);
+        taskUserService.save(taskUser);
     }
 
     @Override

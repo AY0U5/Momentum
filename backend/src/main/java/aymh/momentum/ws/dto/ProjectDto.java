@@ -10,6 +10,8 @@ import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectDto {
     private Long id;
     @NotBlank()
@@ -19,6 +21,6 @@ public class ProjectDto {
     private LocalDateTime createdAt;
     private ProjectState state;
     private Boolean pinned;
-    private long memberCount;
+    private Long memberCount;
     private List<MemberDto> members;
 }

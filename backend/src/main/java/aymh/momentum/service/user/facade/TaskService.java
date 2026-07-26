@@ -15,7 +15,7 @@ public interface TaskService {
 
     void addAttachment(Long taskId, MultipartFile file);
 
-    TaskUser assignTask(Long taskId, User user);
+    void assignTask(Long taskId, User user);
 
     Optional<Task> findById(Long taskId);
 }

@@ -26,4 +26,6 @@ public interface MembershipDao extends JpaRepository<Membership,Long> {
     long countByProjectIdAndActiveTrue(Long projectId);
 
     Optional<Membership> findByUserAndProjectIdAndActiveTrue(User currentUser, Long id);
+
+    Optional<Membership> findByUserIdAndProjectIdAndActiveTrue(Long id, Long projectId);
 }
